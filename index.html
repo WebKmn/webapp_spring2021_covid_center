@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="styles/style.css">
     <title>Covid Center Website.</title>
 </head>
 
@@ -15,7 +16,7 @@
     </header>
     <section>
         <article>
-            <form>
+            <form id="mainForm" onsubmit="return validateForm()" novalidate>
                 <fieldset class="border border-info">
                     <!-- <legend class="w-auto">Patient Information: </legend> -->
                     
@@ -82,6 +83,7 @@
                         </div>
                         <div class="col-md-4 col-lg-2">
                             <input type="date" id="txtDOB" name="txtDOB" class="form-control" required>
+                            <div id="divDoBError" class="col-sm-4 invisible errorMessage"></div>
                         </div>
                     </div>
 
@@ -228,10 +230,10 @@
                     <h5 class="text-center alert alert-secondary">Please answer Yes or No to the following questions.</h5>
 
                     <div class="row form-group">
-                        <label for="ddContact" class="col-sm-12 col-form-label">Have you had contact (within 6 feet for > 15 minutes), or caring for someone who is
+                        <label for="ddContact" class="col-sm-3 col-form-label">Have you had contact (within 6 feet for > 15 minutes), or caring for someone who is
                                 diagnosed with COVID-19 in the last 14 days and were not wearing proper personal
                                 protective equipment?</label>
-                        <div>
+                        <div class="col-sm-4">
                             <select id="ddContact" name="ddContact" class="form-control custom-select">
                                 <option value="No" selected>No</option>
                                 <option value="Yes">Yes</option>
@@ -240,8 +242,8 @@
                     </div>
 
                     <div class="row form-group">
-                        <label for="ddDiagnosis" class="col-md-4 col-form-label">Have you had a diagnosis of COVID-19 in the last 10 days?</label>
-                        <div>
+                        <label for="ddDiagnosis" class="col-sm-3 col-form-label">Have you had a diagnosis of COVID-19 in the last 10 days?</label>
+                        <div class="col-sm-4">
                             <select id="ddDiagnosis" name="ddDiagnosis" class="form-control custom-select">
                                 <option value="No" selected>No</option>
                                 <option value="Yes">Yes</option>
@@ -250,25 +252,26 @@
                     </div>
 
                     <div class="row form-group">
-                        <label for="ddCountry" class="col-md-4 col-form-label">Have you travelled to any country in the last 14 days?</label>
-                        <div>
-                            <select id="ddCountry" name="ddCountry" class="form-control custom-select">
+                        <label for="ddCountry" class="col-sm-3 col-form-label">Have you travelled to any country in the last 14 days?</label>
+                        <div class="col-sm-4">
+                            <select id="ddCountry" name="ddCountry" class="form-control custom-select" onchange="updateCountryView()">
                                 <option value="No" selected>No</option>
                                 <option value="Yes">Yes</option>
                             </select>
                         </div>
                     </div>
 
-                    <div class="row form-group" hidden>
-                        <label for="txtCountry" class="col-md-4 col-form-label">Which countries? (comma seperated)</label>
-                        <div class="col-md-8">
-                            <input type="text" id="txtCountry" name="txtCountry" class="form-control" required>
+                    <div id="divCountry" class="row form-group invisible">
+                        <label for="txtCountry" class="col-sm-3 col-form-label">Which countries? (comma seperated)</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="txtCountry" name="txtCountry" class="form-control" required placeholder="Countries">
+                            <div id="divCountryError" class="col-sm-4 invisible errorMessage"></div>
                         </div>
                     </div>
 
                     <div class="row form-group">
-                        <label for="ddSocial" class="col-md-4 col-form-label">Have you socialized with a group of 6 or more people in the last 14 days?</label>
-                        <div>
+                        <label for="ddSocial" class="col-sm-3 col-form-label">Have you socialized with a group of 6 or more people in the last 14 days?</label>
+                        <div class="col-sm-4">
                             <select id="ddSocial" name="ddSocial" class="form-control custom-select">
                                 <option value="No" selected>No</option>
                                 <option value="Yes">Yes</option>
@@ -277,9 +280,9 @@
                     </div>
 
                     <div class="row from-group">
-                        <label for="txtTemp" class="col-md-2 col-form-label">Current Temperature:</label>
-                        <div>
-                            <input type="text" id="txtTemp" name="txtTemp" required pattern="[0-9]{2,3}" class="form-control">
+                        <label for="txtTemp" class="col-sm-3 col-form-label">Current Temperature:</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="txtTemp" name="txtTemp" required pattern="[0-9]{2,3}.[0-9]" class="form-control" placeholder="Temperature">
                         </div>
                     </div>
                     <br>
@@ -305,6 +308,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
 </body>
 
 </html>
